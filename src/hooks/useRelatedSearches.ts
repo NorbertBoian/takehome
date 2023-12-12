@@ -17,7 +17,7 @@ export const useRelatedSearches = () => {
         // if (err !== "intended") console.log(err);
       }
     },
-    []5
+    []
   );
 
   const rateLimitedGetAndSetRelatedSearches = useMemo(
