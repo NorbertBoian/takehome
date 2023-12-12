@@ -52,7 +52,10 @@ export default async function handler(
       (relatedSearch: [string, unknown, unknown]) =>
         decode(relatedSearch[0].replaceAll("<b>", "").replaceAll("</b>", ""))
     );
-    return response.json(relatedStrings);
+    return response
+      .setHeader("dataSource", "google")
+      .status(200)
+      .json(relatedStrings);
   } catch (err) {
     const fetchResponse = await fetch(
       `https://duckduckgo.com/ac/?q=${percentEncodedQueryWithPlusSign}&kl=wt-wt`,
@@ -77,6 +80,9 @@ export default async function handler(
     const parsedResponse = (
       (await fetchResponse.json()) as { phrase: string }[]
     ).map((relatedSearch) => relatedSearch.phrase);
-    return response.status(200).json(parsedResponse);
+    return response
+      .setHeader("dataSource", "duckduck")
+      .status(200)
+      .json(parsedResponse);
   }
 }
