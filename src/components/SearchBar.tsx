@@ -167,6 +167,7 @@ export const SearchBar = () => {
           ref={inputRef}
           value={value}
           onChange={handleOnChange}
+          autocomplete={false}
           aria-autocomplete="list"
           aria-expanded={visibleResultsList}
           aria-controls="listbox"
