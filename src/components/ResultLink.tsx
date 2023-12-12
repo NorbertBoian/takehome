@@ -34,13 +34,16 @@ export const ResultLink = ({
       {...splitRelatedSearchStrings.reduce<JSX.Element[]>(
         (accumulator, current, index) => {
           const inputtedValueSpanElement = (
-            <span className="inputValueInRelatedSearchSpan" key={index}>
+            <span
+              className="inputValueInRelatedSearchSpan"
+              key={`${index}span`}
+            >
               {lastInputtedValue}
             </span>
           );
           //using div and styling to inline so first unbolded value can be selecte with the use of :first-of-type css selector
           const boldedValueDivElement = (
-            <div className="boldedValueDivElement" key={index}>
+            <div className="boldedValueDivElement" key={`${index}div`}>
               {current}
             </div>
           );

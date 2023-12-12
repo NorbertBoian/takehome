@@ -32,7 +32,7 @@ export const SearchBar = () => {
   const relatedSearchesLength = relatedSearches.length;
 
   const closeResultsList = () => {
-    // setVisibleResultsList(false);
+    setVisibleResultsList(false);
     setValue(lastInputtedValue);
     setHovered(-1);
   };
@@ -153,10 +153,6 @@ export const SearchBar = () => {
   const clearInput = () => {
     handleOnChange("");
   };
-
-  useEffect(() => {
-    console.log(visibleResultsList);
-  }, [visibleResultsList]);
 
   return (
     <div
