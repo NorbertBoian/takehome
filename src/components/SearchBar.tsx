@@ -35,7 +35,10 @@ export const SearchBar = () => {
     setValue(lastInputtedValue);
     setHovered(-1);
   };
-  const openResultsList = () => value && setVisibleResultsList(true);
+  const openResultsList = (newValue?: string) => {
+    if (newValue !== undefined) return newValue && setVisibleResultsList(true);
+    value && setVisibleResultsList(true);
+  };
 
   const openHoveredLink = () => {
     const hoveredElement =
@@ -46,11 +49,11 @@ export const SearchBar = () => {
   const handleOnChange = async (
     eventOrString: ChangeEvent<HTMLInputElement> | string
   ) => {
-    openResultsList();
     const newValue =
       typeof eventOrString === "string"
         ? eventOrString
         : eventOrString.currentTarget.value;
+    newValue ? openResultsList(newValue) : closeResultsList();
     setLastInputtedValue(newValue);
     prevAbortControllerRef.current.abort("intended");
     const abortController = new AbortController();
@@ -148,7 +151,6 @@ export const SearchBar = () => {
 
   const clearInput = () => {
     handleOnChange("");
-    closeResultsList();
   };
 
   return (
