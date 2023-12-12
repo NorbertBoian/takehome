@@ -4,17 +4,18 @@ import {
   useState,
   KeyboardEvent,
   MouseEvent,
+  useEffect,
 } from "react";
 import "./SearchBar.css";
 import { ResultList } from "./ResultList";
 import { useRelatedSearches } from "../hooks/useRelatedSearches";
 
-export type relatedSearch = { phrase: string };
+export type relatedSearch = string;
 
 export const SearchBar = () => {
   const [value, setValue] = useState("");
   const [lastInputtedValue, setLastInputtedValue] = useState(value);
-  const [visibleResultsList, setVisibleResultsList] = useState(true);
+  const [visibleResultsList, setVisibleResultsList] = useState(false);
   const [hovered, setHovered] = useState(-1);
 
   const [
@@ -31,11 +32,14 @@ export const SearchBar = () => {
   const relatedSearchesLength = relatedSearches.length;
 
   const closeResultsList = () => {
-    setVisibleResultsList(false);
+    // setVisibleResultsList(false);
     setValue(lastInputtedValue);
     setHovered(-1);
   };
-  const openResultsList = () => value && setVisibleResultsList(true);
+  const openResultsList = (newValue?: string) => {
+    if (newValue !== undefined) return newValue && setVisibleResultsList(true);
+    value && setVisibleResultsList(true);
+  };
 
   const openHoveredLink = () => {
     const hoveredElement =
@@ -46,11 +50,11 @@ export const SearchBar = () => {
   const handleOnChange = async (
     eventOrString: ChangeEvent<HTMLInputElement> | string
   ) => {
-    openResultsList();
     const newValue =
       typeof eventOrString === "string"
         ? eventOrString
         : eventOrString.currentTarget.value;
+    newValue ? openResultsList(newValue) : closeResultsList();
     setLastInputtedValue(newValue);
     prevAbortControllerRef.current.abort("intended");
     const abortController = new AbortController();
@@ -148,8 +152,11 @@ export const SearchBar = () => {
 
   const clearInput = () => {
     handleOnChange("");
-    closeResultsList();
   };
+
+  useEffect(() => {
+    console.log(visibleResultsList);
+  }, [visibleResultsList]);
 
   return (
     <div
@@ -165,6 +172,7 @@ export const SearchBar = () => {
           ref={inputRef}
           value={value}
           onChange={handleOnChange}
+          autoComplete="off"
           aria-autocomplete="list"
           aria-expanded={visibleResultsList}
           aria-controls="listbox"

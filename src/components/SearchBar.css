@@ -62,7 +62,7 @@ input {
   background-color: rgb(146, 146, 146);
 }
 
-.searchResult .inputValueInRelatedSearchSpan {
+.searchResult .inputValueInRelatedSearchSpan:first-of-type {
   font-weight: normal;
 }
 
@@ -77,6 +77,10 @@ input {
 
 .combobox[data-open="true"] .clearInputButton {
   border-radius: 0 20px 0 0;
+}
+
+.boldedValueDivElement {
+  display: inline;
 }
 
 @media (prefers-color-scheme: light) {

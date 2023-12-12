@@ -13,7 +13,7 @@ export const ResultLink = ({
   lastInputtedValue,
   hovered,
 }: Props) => {
-  const relatedSearchString = relatedSearch.phrase;
+  const relatedSearchString = relatedSearch;
   const splitRelatedSearchStrings =
     relatedSearchString.split(lastInputtedValue);
 
@@ -31,16 +31,26 @@ export const ResultLink = ({
       tabIndex={-1}
       data-combobox
     >
-      {...splitRelatedSearchStrings.reduce<(string | JSX.Element)[]>(
+      {...splitRelatedSearchStrings.reduce<JSX.Element[]>(
         (accumulator, current, index) => {
-          const valueSpanElement = (
+          const inputtedValueSpanElement = (
             <span className="inputValueInRelatedSearchSpan" key={index}>
               {lastInputtedValue}
             </span>
           );
+          //using div and styling to inline so first unbolded value can be selecte with the use of :first-of-type css selector
+          const boldedValueDivElement = (
+            <div className="boldedValueDivElement" key={index}>
+              {current}
+            </div>
+          );
           if (index === splitRelatedSearchStrings.length - 1)
-            return [...accumulator, <span key={index}>{current}</span>];
-          return [...accumulator, current, valueSpanElement];
+            return [...accumulator, boldedValueDivElement];
+          return [
+            ...accumulator,
+            boldedValueDivElement,
+            inputtedValueSpanElement,
+          ];
         },
         []
       )}
