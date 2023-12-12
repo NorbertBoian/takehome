@@ -41,7 +41,7 @@ export const ResultList = forwardRef<HTMLDivElement, Props>(
               />
             ))
           : lastInputtedValue &&
-            Array.from({ length: 5 }, (v, i) => (
+            Array.from({ length: 5 }, (_v, i) => (
               <div key={i} className="searchResult">
                 Loading
               </div>
