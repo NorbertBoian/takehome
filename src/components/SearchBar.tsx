@@ -4,7 +4,6 @@ import {
   useState,
   KeyboardEvent,
   MouseEvent,
-  useEffect,
 } from "react";
 import "./SearchBar.css";
 import { ResultList } from "./ResultList";
