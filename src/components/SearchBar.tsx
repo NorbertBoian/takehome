@@ -14,7 +14,7 @@ export type relatedSearch = { phrase: string };
 export const SearchBar = () => {
   const [value, setValue] = useState("");
   const [lastInputtedValue, setLastInputtedValue] = useState(value);
-  const [visibleResultsList, setVisibleResultsList] = useState(true);
+  const [visibleResultsList, setVisibleResultsList] = useState(false);
   const [hovered, setHovered] = useState(-1);
 
   const [
