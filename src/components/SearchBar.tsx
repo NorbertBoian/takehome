@@ -4,6 +4,7 @@ import {
   useState,
   KeyboardEvent,
   MouseEvent,
+  useEffect,
 } from "react";
 import "./SearchBar.css";
 import { ResultList } from "./ResultList";
@@ -23,8 +24,6 @@ export const SearchBar = () => {
     clearRelatedSearches,
   ] = useRelatedSearches();
 
-  const prevAbortControllerRef = useRef(new AbortController());
-
   const inputRef = useRef<HTMLInputElement>(null);
   const searchResultsContainerRef = useRef<HTMLDivElement>(null);
 
@@ -35,15 +34,19 @@ export const SearchBar = () => {
     setValue(lastInputtedValue);
     setHovered(-1);
   };
+
   const openResultsList = (newValue?: string) => {
     if (newValue !== undefined) return newValue && setVisibleResultsList(true);
     value && setVisibleResultsList(true);
   };
 
-  const openHoveredLink = () => {
+  const openResultsLink = () => {
     const hoveredElement =
       searchResultsContainerRef.current?.children?.item(hovered);
     if (hoveredElement instanceof HTMLAnchorElement) hoveredElement.click();
+    else {
+      window.open(`https://www.google.com/search?q=${value}`, "__blank");
+    }
   };
 
   const handleOnChange = async (
@@ -54,25 +57,29 @@ export const SearchBar = () => {
         ? eventOrString
         : eventOrString.currentTarget.value;
     newValue ? openResultsList(newValue) : closeResultsList();
+    if (newValue !== lastInputtedValue) clearRelatedSearches();
     setLastInputtedValue(newValue);
-    prevAbortControllerRef.current.abort("intended");
-    const abortController = new AbortController();
-    prevAbortControllerRef.current = abortController;
-    const signal = abortController.signal;
     setValue(newValue);
-    clearRelatedSearches();
-    rateLimitedGetAndSetRelatedSearches(newValue, signal);
   };
 
-  const openLinkCloseListRefocusInputAndModifyInput = (openLink = true) => {
-    if (openLink) openHoveredLink();
+  useEffect(() => {
+    const abortController = new AbortController();
+    const signal = abortController.signal;
+    rateLimitedGetAndSetRelatedSearches(lastInputtedValue, signal);
+    return () => {
+      abortController.abort("intended");
+    };
+  }, [rateLimitedGetAndSetRelatedSearches, lastInputtedValue]);
+
+  const handleOpenSearchResult = ({ openLink } = { openLink: true }) => {
+    if (openLink) openResultsLink();
     handleOnChange(value);
     if (inputRef.current) inputRef.current.focus();
     closeResultsList();
   };
 
   const handleSearchResultClick = () =>
-    openLinkCloseListRefocusInputAndModifyInput(false);
+    handleOpenSearchResult({ openLink: false });
 
   const setHoveredAndUpdateValue = (
     newHovered: number | ((prevHovered: number) => number)
@@ -127,7 +134,7 @@ export const SearchBar = () => {
         break;
       case "Enter":
         if (document.activeElement === inputRef.current)
-          openLinkCloseListRefocusInputAndModifyInput();
+          handleOpenSearchResult();
         break;
       case "Escape":
         closeResultsList();

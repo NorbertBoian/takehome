@@ -1,13 +1,3 @@
-.combobox {
-  font-size: 1.3em;
-  border-radius: 20px;
-  line-height: 1;
-  overflow: hidden;
-  background-color: var(--fg-color);
-  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-  color: var(--text-color);
-}
-
 a,
 a:visited {
   text-decoration: none;
@@ -15,22 +5,39 @@ a:visited {
   color: inherit;
 }
 
-.inputContainer {
-  display: flex;
-  align-items: stretch;
-}
-
-.clearInputButton {
-  padding-inline: 0.5em;
-  border-radius: 0 20px 20px 0;
-  font-size: 1em;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
-
 button {
   cursor: pointer;
   border: 0;
   background-color: transparent;
+}
+
+.combobox {
+  font-size: 1.3em;
+  border-radius: 20px;
+  line-height: 1;
+  background-color: var(--fg-color);
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  color: var(--text-color);
+}
+
+.combobox[data-open="true"] .searchResultsContainer {
+  display: flex;
+  flex-direction: column;
+  border-radius: 0 0 20px 20px;
+  overflow: hidden;
+}
+
+.combobox[data-open="true"] input {
+  border-radius: 20px 0 0 0;
+}
+
+.combobox[data-open="true"] .clearInputButton {
+  border-radius: 0 20px 0 0;
+}
+
+.inputContainer {
+  display: flex;
+  align-items: stretch;
 }
 
 input {
@@ -42,6 +49,13 @@ input {
   font-size: inherit;
   font-family: inherit;
   background-color: transparent;
+}
+
+.clearInputButton {
+  padding-inline: 0.5em;
+  border-radius: 0 20px 20px 0;
+  font-size: 1em;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .searchResultsContainer {
@@ -66,22 +80,6 @@ input {
   font-weight: normal;
 }
 
-.combobox[data-open="true"] .searchResultsContainer {
-  display: flex;
-  flex-direction: column;
-}
-
-.combobox[data-open="true"] input {
-  border-radius: 20px 0 0 0;
-}
-
-.combobox[data-open="true"] .clearInputButton {
-  border-radius: 0 20px 0 0;
-}
-
 .boldedValueDivElement {
   display: inline;
-}
-
-@media (prefers-color-scheme: light) {
 }

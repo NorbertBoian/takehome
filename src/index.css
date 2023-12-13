@@ -8,6 +8,7 @@
   --text-color: #000000;
   --bg-color: #e9e9e9;
   --fg-color: rgb(221, 221, 221);
+  --hv-color: rgb(182, 179, 179);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -32,5 +33,6 @@ body {
     --text-color: white;
     --bg-color: #0e0e0e;
     --fg-color: rgb(43, 43, 43);
+    --hv-color: rgb(121, 121, 121);
   }
 }
