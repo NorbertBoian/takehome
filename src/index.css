@@ -28,6 +28,10 @@ body {
   box-sizing: border-box;
 }
 
+#root {
+  margin: 0 auto;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --text-color: white;

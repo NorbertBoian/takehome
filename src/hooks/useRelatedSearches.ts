@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from "react";
 import { relatedSearch } from "../components/SearchBar";
-import { getRelatedSearches } from "../components/getRelatedSearches";
-import { getThrottledAndDebouncedFunction } from "../components/getThrottledAndDebouncedFunction";
+import { getRelatedSearches } from "./getRelatedSearches";
+import { getThrottledAndDebouncedFunction } from "../utils/getThrottledAndDebouncedFunction";
 
 export const useRelatedSearches = () => {
   const [relatedSearches, setRelatedSearches] = useState<relatedSearch[]>([]);
